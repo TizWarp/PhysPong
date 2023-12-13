@@ -1,0 +1,46 @@
+[gd_scene load_steps=7 format=3 uid="uid://d3ovccwxqiaap"]
+
+[ext_resource type="Script" path="res://scripts/explosion.gd" id="1_p37es"]
+[ext_resource type="Shader" path="res://scripts/distort.gdshader" id="2_666op"]
+[ext_resource type="Texture2D" uid="uid://df8sg62rpfieg" path="res://icon.svg" id="3_3uhyq"]
+
+[sub_resource type="Gradient" id="Gradient_ecvn2"]
+
+[sub_resource type="Curve" id="Curve_2614l"]
+min_value = -1.0
+_data = [Vector2(0.083871, -1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_k8lf5"]
+shader = ExtResource("2_666op")
+shader_parameter/chaos = 1.0
+shader_parameter/radius = 0.5
+shader_parameter/attenuation = 2.0
+
+[node name="explosion" type="CPUParticles2D"]
+emitting = false
+amount = 50
+lifetime = 0.7
+one_shot = true
+explosiveness = 0.9
+lifetime_randomness = 1.0
+direction = Vector2(0, 0)
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 400.0
+initial_velocity_max = 400.0
+scale_amount_min = 10.0
+scale_amount_max = 15.0
+color = Color(1, 0, 0, 1)
+color_ramp = SubResource("Gradient_ecvn2")
+hue_variation_min = -1.0
+hue_variation_max = 1.0
+hue_variation_curve = SubResource("Curve_2614l")
+script = ExtResource("1_p37es")
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+z_index = 1
+material = SubResource("ShaderMaterial_k8lf5")
+position = Vector2(-5.00001, -4.49999)
+scale = Vector2(4.14062, 3.30469)
+texture = ExtResource("3_3uhyq")

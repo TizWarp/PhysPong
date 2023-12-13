@@ -1,0 +1,73 @@
+[gd_scene load_steps=9 format=3 uid="uid://bj7foy257nypg"]
+
+[ext_resource type="Script" path="res://scripts/asteroid.gd" id="1_dnh3j"]
+[ext_resource type="Texture2D" uid="uid://2vjika8pl5oh" path="res://assets/New Piskel-1.png(2).png" id="2_u7mwv"]
+[ext_resource type="Shader" path="res://scripts/weaird.gdshader" id="5_t5co6"]
+[ext_resource type="Texture2D" uid="uid://df8sg62rpfieg" path="res://icon.svg" id="6_rp26s"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_2kiae"]
+bounce = 1.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_rqqak"]
+radius = 31.0161
+
+[sub_resource type="Curve" id="Curve_0h64j"]
+min_value = -1.0
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_06sy3"]
+shader = ExtResource("5_t5co6")
+shader_parameter/r_displacement = Vector2(3, 0)
+shader_parameter/g_displacement = Vector2(0, 3)
+shader_parameter/b_displacement = Vector2(-3, 0)
+
+[node name="asteroid" type="RigidBody2D"]
+collision_layer = 8
+collision_mask = 8
+mass = 5.0
+physics_material_override = SubResource("PhysicsMaterial_2kiae")
+gravity_scale = 0.0
+continuous_cd = 2
+max_contacts_reported = 905
+contact_monitor = true
+can_sleep = false
+freeze_mode = 1
+linear_damp_mode = 1
+script = ExtResource("1_dnh3j")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-4, -1)
+shape = SubResource("CircleShape2D_rqqak")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+self_modulate = Color(1, 1, 1, 0.392157)
+texture = ExtResource("2_u7mwv")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+modulate = Color(1, 1, 1, 0.392157)
+amount = 200
+emission_shape = 1
+emission_sphere_radius = 60.0
+direction = Vector2(0, 0)
+gravity = Vector2(0, 0)
+initial_velocity_max = 200.0
+scale_amount_min = 4.0
+scale_amount_max = 12.0
+hue_variation_max = 0.06
+hue_variation_curve = SubResource("Curve_0h64j")
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+z_index = 2
+material = SubResource("ShaderMaterial_06sy3")
+position = Vector2(-5.5, -3.50003)
+scale = Vector2(2.67969, 3.16406)
+texture = ExtResource("6_rp26s")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(-124.064, 0.499989)
+scale = Vector2(7.39362, 20.95)
+rect = Rect2(-10, -10, 59.105, 20)
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

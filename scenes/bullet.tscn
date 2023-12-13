@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://b5fg63fwm22aw"]
+
+[ext_resource type="Texture2D" uid="uid://df8sg62rpfieg" path="res://icon.svg" id="1_jubnb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yo5bb"]
+size = Vector2(128, 128)
+
+[node name="bullet" type="RigidBody2D"]
+scale = Vector2(0.25, 0.25)
+collision_layer = 6
+collision_mask = 6
+gravity_scale = 0.0
+can_sleep = false
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_jubnb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_yo5bb")

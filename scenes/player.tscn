@@ -1,0 +1,176 @@
+[gd_scene load_steps=16 format=3 uid="uid://b57gpxnfrf73x"]
+
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_syhwt"]
+[ext_resource type="Texture2D" uid="uid://cq7e35qshj3sf" path="res://assets/New Piskel-1.png(1).png" id="2_okotk"]
+[ext_resource type="Texture2D" uid="uid://bnnwufndjc760" path="res://assets/New Piskel-1.png(3).png" id="3_e608n"]
+[ext_resource type="Texture2D" uid="uid://cb26etkap5ttk" path="res://assets/New Piskel-2.png.png" id="4_tmjks"]
+[ext_resource type="Shader" path="res://scripts/weaird.gdshader" id="5_55uh8"]
+[ext_resource type="Texture2D" uid="uid://df8sg62rpfieg" path="res://icon.svg" id="6_3o6f2"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_x7xta"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7ctwh"]
+size = Vector2(47, 380)
+
+[sub_resource type="Animation" id="Animation_ykrt4"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ProgressBar:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_no63w"]
+resource_name = "fade_bar_in"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ProgressBar:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_4jt22"]
+resource_name = "fade_bar_out"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ProgressBar:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_q4lkq"]
+resource_name = "grow"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1, 1.5)]
+}
+
+[sub_resource type="Animation" id="Animation_icopo"]
+resource_name = "shrink"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, 1.5), Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jtcq5"]
+_data = {
+"RESET": SubResource("Animation_ykrt4"),
+"fade_bar_in": SubResource("Animation_no63w"),
+"fade_bar_out": SubResource("Animation_4jt22"),
+"grow": SubResource("Animation_q4lkq"),
+"shrink": SubResource("Animation_icopo")
+}
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_y1gam"]
+shader = ExtResource("5_55uh8")
+shader_parameter/r_displacement = Vector2(3, 0)
+shader_parameter/g_displacement = Vector2(0, 3)
+shader_parameter/b_displacement = Vector2(-3, 0)
+
+[node name="player" type="RigidBody2D"]
+top_level = true
+collision_layer = 3
+collision_mask = 3
+mass = 12.0
+physics_material_override = SubResource("PhysicsMaterial_x7xta")
+inertia = 1.0
+lock_rotation = true
+continuous_cd = 2
+max_contacts_reported = 2855
+angular_damp = 1.0
+script = ExtResource("1_syhwt")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1.5, -1.49012e-08)
+shape = SubResource("RectangleShape2D_7ctwh")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+self_modulate = Color(0.498039, 0.498039, 1, 1)
+position = Vector2(5, 0)
+scale = Vector2(1.5, 3)
+texture = ExtResource("2_okotk")
+
+[node name="ProgressBar" type="TextureProgressBar" parent="."]
+self_modulate = Color(1, 1, 1, 0)
+offset_left = -68.5104
+offset_top = -257.844
+offset_right = 59.4896
+offset_bottom = -129.844
+texture_under = ExtResource("3_e608n")
+texture_progress = ExtResource("4_tmjks")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_jtcq5")
+}
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+z_index = 2
+material = SubResource("ShaderMaterial_y1gam")
+position = Vector2(8.5, 2.49998)
+scale = Vector2(3.69531, 6.00781)
+texture = ExtResource("6_3o6f2")
+
+[node name="GPUParticles2D" type="CPUParticles2D" parent="."]
+amount = 60
+lifetime = 0.8
+explosiveness = 0.3
+lifetime_randomness = 1.0
+emission_shape = 3
+emission_rect_extents = Vector2(50, 225)
+linear_accel_min = -1.0
+linear_accel_max = 1.0
+scale_amount_min = 5.0
+scale_amount_max = 12.0
+
+[connection signal="value_changed" from="ProgressBar" to="." method="_on_progress_bar_value_changed"]

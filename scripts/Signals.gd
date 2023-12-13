@@ -1,0 +1,10 @@
+extends Node
+
+signal player1_scored
+signal player2_scored
+signal player_disconnected
+signal flip_gravity
+signal cursor_disconnected
+signal reset_game
+signal start_game
+signal player_joined

@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://bp1hmrj05s3mg"]
+
+[ext_resource type="Script" path="res://scripts/lobby_button.gd" id="1_bg5vd"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bb700"]
+size = Vector2(79, 49)
+
+[node name="Button" type="Button"]
+offset_left = -33.0
+offset_top = -16.0
+offset_right = 33.0
+offset_bottom = 15.0
+text = "Button"
+script = ExtResource("1_bg5vd")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(33, 15.5)
+shape = SubResource("RectangleShape2D_bb700")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
